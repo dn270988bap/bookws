@@ -31,7 +31,9 @@ public class BookDao {
 
     }
 
-  
+    public void update() {
+
+    }
 
     public void remove(int id) {
         if (id > 0) {
