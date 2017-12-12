@@ -10,10 +10,25 @@ public class BookDao {
     List<Book> books = new ArrayList<>();
 
     public void create(Book book) {
+        int cnt = 0;
         if (book.getId() <= 0) {
             book.setId(getNextId());
+            books.add(book);
+        } else {
+            for (int j = 0; j < books.size(); j++) {
+                if (book.getId() == books.get(j).getId()) {
+                    cnt++;
+                }
+            }
+            if (cnt == 0) {
+                books.add(book);
+            } else {
+                book.setId(getNextId());
+                books.add(book);
+            }
+
         }
-        books.add(book);
+
     }
 
     public void update() {
