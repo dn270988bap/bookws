@@ -7,28 +7,16 @@ import java.util.List;
 public class AuthorDao {
 
     private int id = 0;
-    List<Author> authors = new ArrayList<>();
+    private List<Author> authors = new ArrayList<>();
 
     public void create(Author author) {
-        int cnt = 0;
+
         if (author.getId() <= 0) {
             author.setId(getNextId());
-            authors.add(author);
-        } else {
-            for (int j = 0; j < authors.size(); j++) {
-                if (author.getId() == authors.get(j).getId()) {
-                    cnt++;
-                }
-            }
-            if (cnt == 0) {
-                authors.add(author);
-            } else {
-                author.setId(getNextId());
-                authors.add(author);
-            }
-
+        } else if (-1 != findById(author.getId())) {
+            throw new RuntimeException("ID already exists");
         }
-
+        authors.add(author);
     }
 
     public void update() {
@@ -36,13 +24,19 @@ public class AuthorDao {
     }
 
     public void remove(int id) {
-        if (id > 0) {
-            for (int i = 0; i < authors.size(); i++) {
-                if (authors.get(i).getId() == id) {
-                    authors.remove(i);
-                }
+        if (-1 != findById(id)) {
+            authors.remove(findById(id));
+        }
+    }
+
+    public int findById(int authorid) {
+        int pos = -1;
+        for (int i = 0; i < authors.size(); i++) {
+            if (authorid == authors.get(i).getId()) {
+                pos = i;
             }
         }
+        return pos;
     }
 
     public int getNextId() {
