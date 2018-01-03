@@ -14,7 +14,7 @@ public class AuthorDao {
             author.setId(getNextId());
         }
         if (-1 != findById(author.getId())) {
-            throw new RuntimeException("ID already exists");
+            throw new RuntimeException("ID " + author.getId() + " already exists");
         }
         authors.add(author);
         return author.getId();
@@ -28,8 +28,17 @@ public class AuthorDao {
         int pos = findById(id);
         if (-1 != pos) {
             authors.remove(pos);
+            return 1;
         }
-        return 1;
+        return 0;
+    }
+
+    public List<String> getAll() {
+        List<String> list = new ArrayList();
+        for (int i = 0; i < authors.size(); i++) {
+            list.add(authors.get(i).getId() + "; " + authors.get(i).getName());
+        }
+        return list;
     }
 
     public int findById(int authorid) {
