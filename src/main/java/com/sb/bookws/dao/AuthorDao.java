@@ -20,6 +20,10 @@ public class AuthorDao {
         return author.getId();
     }
 
+    public int getNextId() {
+        return ++id;
+    }
+
     public void update() {
 
     }
@@ -33,14 +37,6 @@ public class AuthorDao {
         return 0;
     }
 
-    public List<String> getAll() {
-        List<String> list = new ArrayList();
-        for (int i = 0; i < authors.size(); i++) {
-            list.add(authors.get(i).getId() + "; " + authors.get(i).getName());
-        }
-        return list;
-    }
-
     public int findById(int authorid) {
         for (int i = 0; i < authors.size(); i++) {
             if (authorid == authors.get(i).getId()) {
@@ -49,9 +45,23 @@ public class AuthorDao {
         }
         return -1;
     }
+    
+    public List <Author> findByName(String name) {
+        List <Author> list = new ArrayList();
+        for (int i = 0; i < authors.size(); i++) {
+            if (name.equals(authors.get(i).getName())) {
+                list.add(authors.get(i));
+            }
+        }
+        return list;
+    }
 
-    public int getNextId() {
-        return ++id;
+    public List<String> getAll() {
+        List<String> list = new ArrayList();
+        for (int i = 0; i < authors.size(); i++) {
+            list.add(authors.get(i).getId() + "; " + authors.get(i).getName());
+        }
+        return list;
     }
 
 }

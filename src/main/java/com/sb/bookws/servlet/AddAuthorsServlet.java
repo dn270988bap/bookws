@@ -1,6 +1,5 @@
 package com.sb.bookws.servlet;
 
-
 import com.google.gson.Gson;
 import com.sb.bookws.dao.AuthorDao;
 import com.sb.bookws.entity.Author;
@@ -25,8 +24,7 @@ public class AddAuthorsServlet extends HttpServlet {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         String line = "";
-        String tmp = "";
-        List<String> list = new ArrayList();
+        String tmp;
 
         BufferedReader reader = request.getReader();
 
@@ -38,10 +36,7 @@ public class AddAuthorsServlet extends HttpServlet {
         Author author = gson.fromJson(line, Author.class);
 
         authorDao.create(author);
-        list = authorDao.getAll();
-        for (int i = 0; i < list.size(); i++) {
-            out.println(list.get(i));
-        }
+
     }
 
 }
