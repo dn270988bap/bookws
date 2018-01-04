@@ -4,9 +4,25 @@
         <servlet-name>NewServlet</servlet-name>
         <servlet-class>com.sb.bookws.NewServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddAuthors</servlet-name>
+        <servlet-class>AddAuthors</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddAuthorsServlet</servlet-name>
+        <servlet-class>com.sb.bookws.servlet.AddAuthorsServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>NewServlet</servlet-name>
         <url-pattern>/NewServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddAuthors</servlet-name>
+        <url-pattern>/AddAuthors</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddAuthorsServlet</servlet-name>
+        <url-pattern>/AddAuthorsServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
