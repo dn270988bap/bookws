@@ -15,8 +15,8 @@ public class BookDao {
             book.setId(getNextId());
             books.add(book);
         } else {
-            for (int j = 0; j < books.size(); j++) {
-                if (book.getId() == books.get(j).getId()) {
+            for (int i = 0; i < books.size(); i++) {
+                if (book.getId() == books.get(i).getId()) {
                     cnt++;
                 }
             }
