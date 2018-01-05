@@ -45,9 +45,17 @@ public class AuthorDao {
         }
         return -1;
     }
-    
-    public List <Author> findByName(String name) {
-        List <Author> list = new ArrayList();
+
+    public Author searchById(int authorid) {
+        int idlist = findById(authorid);
+        if (-1 != idlist) {
+            return authors.get(idlist);
+        }
+        return null;
+    }
+
+    public List<Author> findByName(String name) {
+        List<Author> list = new ArrayList();
         for (int i = 0; i < authors.size(); i++) {
             if (name.equals(authors.get(i).getName())) {
                 list.add(authors.get(i));
