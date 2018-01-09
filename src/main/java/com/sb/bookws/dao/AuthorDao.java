@@ -3,6 +3,8 @@ package com.sb.bookws.dao;
 import com.sb.bookws.entity.Author;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AuthorDao {
 
@@ -24,7 +26,17 @@ public class AuthorDao {
         return ++id;
     }
 
-    public void update() {
+    public void update(int id, String name) {
+        int listid = findById(id);
+        if (-1 != listid){
+            try {
+                Author clone = authors.get(listid).clone();
+                clone.setName(name);
+                authors.get(listid).setName(clone.getName());
+            } catch (CloneNotSupportedException ex) {
+                Logger.getLogger(AuthorDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
     }
 

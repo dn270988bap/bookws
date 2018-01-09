@@ -45,7 +45,7 @@ public class AddAuthorsServlet extends HttpServlet {
         String id = request.getParameter("id");
 
         AuthorDao authordao = (AuthorDao) getServletContext().getAttribute("authordao");
-        out.println(authordao.searchById(Integer.parseInt(id)));
+        out.println(authordao.searchById(Integer.parseInt(id)).getName());
 
     }
 
@@ -59,6 +59,19 @@ public class AddAuthorsServlet extends HttpServlet {
 
         AuthorDao authordao = (AuthorDao) getServletContext().getAttribute("authordao");
         out.println(authordao.remove(Integer.parseInt(id)));
+    }
+    
+     @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
+        //PrintWriter out = response.getWriter();
+        String id = request.getParameter("id");
+        String name = request.getParameter("name");
+
+        AuthorDao authordao = (AuthorDao) getServletContext().getAttribute("authordao");
+        authordao.update(Integer.parseInt(id), name);
     }
 
 }
