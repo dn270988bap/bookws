@@ -22,8 +22,8 @@ public class Author implements Cloneable {
     }
 
     @Override
-    public Author clone() throws CloneNotSupportedException {
-        return (Author) super.clone();
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
 }

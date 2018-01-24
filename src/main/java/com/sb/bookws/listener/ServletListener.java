@@ -1,6 +1,7 @@
 package com.sb.bookws.listener;
 
-import com.sb.bookws.dao.AuthorDao;
+import com.sb.bookws.configuration.Init;
+import java.util.Map;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
@@ -8,13 +9,16 @@ public class ServletListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        AuthorDao authordao = new AuthorDao();
-        sce.getServletContext().setAttribute("authordao", authordao);
+        Init init = new Init();
+                        
+        for (Map.Entry<String, Object> pair : init.initialization().entrySet()){
+            sce.getServletContext().setAttribute(pair.getKey(), pair.getValue());
+        }        
         System.out.println("11111111111111111111111111111111111111Initialized");
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        System.out.println("22222222222222222222222222Destroyed");
+        System.out.println("2222222222222222222222222222222222222222Destroyed");
     }
 }

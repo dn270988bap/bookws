@@ -26,18 +26,17 @@ public class AuthorDao {
         return ++id;
     }
 
-    public void update(int id, String name) {
-        int listid = findById(id);
-        if (-1 != listid){
-            try {
-                Author clone = authors.get(listid).clone();
-                clone.setName(name);
-                authors.get(listid).setName(clone.getName());
-            } catch (CloneNotSupportedException ex) {
-                Logger.getLogger(AuthorDao.class.getName()).log(Level.SEVERE, null, ex);
+    public void update(Author author) {
+        try {
+            Author copyauthor = (Author) author.clone();
+            int authorpos = findById(copyauthor.getId());
+            if (-1 != authorpos) {
+                authors.get(authorpos).setId(copyauthor.getId());
+                authors.get(authorpos).setName(copyauthor.getName());
             }
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(AuthorDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     public int remove(int id) {
@@ -61,7 +60,11 @@ public class AuthorDao {
     public Author searchById(int authorid) {
         int idlist = findById(authorid);
         if (-1 != idlist) {
-            return authors.get(idlist);
+            try {
+                return (Author) authors.get(idlist).clone();
+            } catch (CloneNotSupportedException ex) {
+                Logger.getLogger(AuthorDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return null;
     }
@@ -70,16 +73,12 @@ public class AuthorDao {
         List<Author> list = new ArrayList();
         for (int i = 0; i < authors.size(); i++) {
             if (name.equals(authors.get(i).getName())) {
-                list.add(authors.get(i));
+                try {
+                    list.add((Author) authors.get(i).clone());
+                } catch (CloneNotSupportedException ex) {
+                    Logger.getLogger(AuthorDao.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-        }
-        return list;
-    }
-
-    public List<String> getAll() {
-        List<String> list = new ArrayList();
-        for (int i = 0; i < authors.size(); i++) {
-            list.add(authors.get(i).getId() + "; " + authors.get(i).getName());
         }
         return list;
     }

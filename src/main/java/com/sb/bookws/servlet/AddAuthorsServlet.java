@@ -1,8 +1,6 @@
 package com.sb.bookws.servlet;
 
-import com.google.gson.Gson;
-import com.sb.bookws.dao.AuthorDao;
-import com.sb.bookws.entity.Author;
+import com.sb.bookws.bl.BlLayer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -28,11 +26,9 @@ public class AddAuthorsServlet extends HttpServlet {
             line = line + tmp;
         }
 
-        Gson gson = new Gson();
-        Author author = gson.fromJson(line, Author.class);
+        BlLayer bl = (BlLayer) getServletContext().getAttribute("bl");
 
-        AuthorDao authordao = (AuthorDao) getServletContext().getAttribute("authordao");
-        out.println("Created ID " + authordao.create(author));
+        out.println(bl.preCreateAuthor(line));
 
     }
 
@@ -40,12 +36,18 @@ public class AddAuthorsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         request.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html; charset=UTF-8");
+        response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         String id = request.getParameter("id");
+        String name = request.getParameter("name");
 
-        AuthorDao authordao = (AuthorDao) getServletContext().getAttribute("authordao");
-        out.println(authordao.searchById(Integer.parseInt(id)).getName());
+        BlLayer bl = (BlLayer) getServletContext().getAttribute("bl");
+        
+        try {
+            out.println(bl.searchAuthorByName(name));
+        } catch (NullPointerException ne){
+            out.println(bl.searchAuthorById(Integer.parseInt(id)));
+        }       
 
     }
 
@@ -57,21 +59,28 @@ public class AddAuthorsServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         String id = request.getParameter("id");
 
-        AuthorDao authordao = (AuthorDao) getServletContext().getAttribute("authordao");
-        out.println(authordao.remove(Integer.parseInt(id)));
+        BlLayer bl = (BlLayer) getServletContext().getAttribute("bl");
+
+        out.println(bl.removeAuthor(Integer.parseInt(id)));
     }
-    
-     @Override
+
+    @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
-        //PrintWriter out = response.getWriter();
-        String id = request.getParameter("id");
-        String name = request.getParameter("name");
+        String line = "";
+        String tmp;
 
-        AuthorDao authordao = (AuthorDao) getServletContext().getAttribute("authordao");
-        authordao.update(Integer.parseInt(id), name);
+        BufferedReader reader = request.getReader();
+
+        while ((tmp = reader.readLine()) != null) {
+            line = line + tmp;
+        }
+        
+        BlLayer bl = (BlLayer) getServletContext().getAttribute("bl");
+        bl.updateauthor(line);
+
     }
 
 }
