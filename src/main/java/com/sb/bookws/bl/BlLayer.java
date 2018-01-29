@@ -8,9 +8,6 @@ import com.sb.bookws.dao.AuthorDao;
 import com.sb.bookws.dao.BookDao;
 import com.sb.bookws.dao.GenreDao;
 
-
-
-
 public class BlLayer {
 
     AuthorDao authordao;
@@ -20,8 +17,8 @@ public class BlLayer {
     public void setAuthordao(AuthorDao authordao) {
         this.authordao = authordao;
     }
-    
-     public void setBookdao(BookDao bookdao) {
+
+    public void setBookdao(BookDao bookdao) {
         this.bookdao = bookdao;
     }
 
@@ -59,15 +56,21 @@ public class BlLayer {
         Author author = gson.fromJson(json, Author.class);
         authordao.update(author);
     }
-    
+
     public String preCreateBook(String json) {
 
         Gson gson = new Gson();
         Book book = gson.fromJson(json, Book.class);
-        if (-1 != authordao.findById(book.getAuthorid())){
-            return "Created whith ID " + bookdao.create(book);
+        if (-1 != authordao.findById(book.getAuthorid())) {
+            if (-1 != genredao.findById(book.getGenreid())) {
+                return "Created whith ID " + bookdao.create(book);
+            } else {
+                return "Genre not found";
+            }
+
+        } else {
+            return "Author not found";
         }
-        return "Author not found";
     }
 
     public String preCreateGenre(String json) {
