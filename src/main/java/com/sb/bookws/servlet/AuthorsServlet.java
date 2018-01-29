@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class AddAuthorsServlet extends HttpServlet {
+public class AuthorsServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -42,12 +42,12 @@ public class AddAuthorsServlet extends HttpServlet {
         String name = request.getParameter("name");
 
         BlLayer bl = (BlLayer) getServletContext().getAttribute("bl");
-        
+
         try {
             out.println(bl.searchAuthorByName(name));
-        } catch (NullPointerException ne){
+        } catch (NullPointerException ne) {
             out.println(bl.searchAuthorById(Integer.parseInt(id)));
-        }       
+        }
 
     }
 
@@ -77,7 +77,7 @@ public class AddAuthorsServlet extends HttpServlet {
         while ((tmp = reader.readLine()) != null) {
             line = line + tmp;
         }
-        
+
         BlLayer bl = (BlLayer) getServletContext().getAttribute("bl");
         bl.updateauthor(line);
 

@@ -5,12 +5,28 @@
         <listener-class>com.sb.bookws.listener.ServletListener</listener-class>
     </listener>
     <servlet>
-        <servlet-name>AddAuthorsServlet</servlet-name>
-        <servlet-class>com.sb.bookws.servlet.AddAuthorsServlet</servlet-class>
+        <servlet-name>AuthorsServlet</servlet-name>
+        <servlet-class>com.sb.bookws.servlet.AuthorsServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GenresServlet</servlet-name>
+        <servlet-class>com.sb.bookws.servlet.GenresServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BooksServlet</servlet-name>
+        <servlet-class>com.sb.bookws.servlet.BooksServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>AddAuthorsServlet</servlet-name>
-        <url-pattern>/AddAuthorsServlet</url-pattern>
+        <servlet-name>AuthorsServlet</servlet-name>
+        <url-pattern>/AuthorsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GenresServlet</servlet-name>
+        <url-pattern>/GenresServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BooksServlet</servlet-name>
+        <url-pattern>/BooksServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
