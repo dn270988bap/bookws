@@ -10,9 +10,10 @@ import com.sb.bookws.dao.GenreDao;
 
 public class BlLayer {
 
-    AuthorDao authordao;
-    BookDao bookdao;
-    GenreDao genredao;
+    private AuthorDao authordao;
+    private BookDao bookdao;
+    private GenreDao genredao;
+    private Gson gson = new Gson();
 
     public void setAuthordao(AuthorDao authordao) {
         this.authordao = authordao;
@@ -28,20 +29,17 @@ public class BlLayer {
 
     public String preCreateAuthor(String json) {
 
-        Gson gson = new Gson();
         Author author = gson.fromJson(json, Author.class);
         return "Created whith ID " + authordao.create(author);
     }
 
     public String searchAuthorById(int id) {
 
-        Gson gson = new Gson();
         return gson.toJson(authordao.searchById(id));
     }
 
     public String searchAuthorByName(String name) {
 
-        Gson gson = new Gson();
         return gson.toJson(authordao.findByName(name));
     }
 
@@ -52,32 +50,34 @@ public class BlLayer {
 
     public void updateauthor(String json) {
 
-        Gson gson = new Gson();
         Author author = gson.fromJson(json, Author.class);
         authordao.update(author);
     }
 
     public String preCreateBook(String json) {
 
-        Gson gson = new Gson();
         Book book = gson.fromJson(json, Book.class);
         if (-1 != authordao.findById(book.getAuthorid())) {
             if (-1 != genredao.findById(book.getGenreid())) {
                 return "Created whith ID " + bookdao.create(book);
             } else {
-                return "Genre not found";
+                throw new RuntimeException("Genre not found");
             }
 
         } else {
-            return "Author not found";
+            throw new RuntimeException("Author not found");
         }
     }
 
     public String preCreateGenre(String json) {
 
-        Gson gson = new Gson();
         Genre genre = gson.fromJson(json, Genre.class);
         return "Created whith ID " + genredao.create(genre);
+    }
+
+    public int removeGenre(int id) {
+
+        return genredao.remove(id);
     }
 
 }

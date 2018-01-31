@@ -31,4 +31,17 @@ public class GenresServlet extends HttpServlet {
         out.println(bl.preCreateGenre(line));
 
     }
+    
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        String id = request.getParameter("id");
+
+        BlLayer bl = (BlLayer) getServletContext().getAttribute("bl");
+
+        out.println(bl.removeGenre(Integer.parseInt(id)));
+    }
 }

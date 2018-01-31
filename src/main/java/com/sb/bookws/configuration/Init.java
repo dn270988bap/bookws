@@ -22,8 +22,9 @@ public class Init {
 
         objmap.put("authordao", authordao);
         objmap.put("book", bookdao);
+        objmap.put("genre", genredao);
         objmap.put("bl", bl);
-        
+
         return objmap;
     }
 

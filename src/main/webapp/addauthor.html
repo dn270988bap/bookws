@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Add author to DB</title>
+        <title>Bookws</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
@@ -9,6 +9,14 @@
         <form method="POST" action="AuthorsServlet">
             ID: <input type="text" name="id">
             Имя: <input type="text" name = "name">
+            <input type="submit" value="Add">
+        </form>
+        <br>
+        <form method="POST" action="BooksServlet">
+            ID: <input type="text" name="id">
+            Название книги: <input type="text" name = "name">
+            Идентификатор автора: <input type="text" name = "authorid">
+            Идентификатор жанра книги: <input type="text" name = "genreid">
             <input type="submit" value="Add">
         </form>
     </body>

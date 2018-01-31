@@ -23,6 +23,15 @@ public class GenreDao {
         genres.add(genre);
         return genre.getId();
     }
+    
+    public int remove(int id) {
+        int pos = findById(id);
+        if (-1 != pos) {
+            genres.remove(pos);
+            return 1;
+        }
+        return 0;
+    }
 
     public int findById(int genreid) {
         for (int i = 0; i < genres.size(); i++) {
