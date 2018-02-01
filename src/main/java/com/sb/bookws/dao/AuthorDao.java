@@ -8,6 +8,8 @@ import java.util.logging.Logger;
 
 public class AuthorDao {
 
+    private static final Logger LOG = Logger.getLogger(AuthorDao.class.getName());
+
     private int id = 0;
     private List<Author> authors = new ArrayList<>();
 
@@ -27,25 +29,34 @@ public class AuthorDao {
     }
 
     public void update(Author author) {
+        Author copyauthor = null;
         try {
-            Author copyauthor = (Author) author.clone();
-            int authorpos = findById(copyauthor.getId());
-            if (-1 != authorpos) {
-                authors.get(authorpos).setId(copyauthor.getId());
-                authors.get(authorpos).setName(copyauthor.getName());
-            }
+            copyauthor = (Author) author.clone();
         } catch (CloneNotSupportedException ex) {
-            Logger.getLogger(AuthorDao.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.log(Level.SEVERE, null, ex);
+            //TODO:подумать над тем, что именно делать, если не поддерживается клонирование
+            //но оно ведь поддерживается ))
+            return;
         }
+
+        int authorpos = findById(copyauthor.getId());
+        if (-1 == authorpos) {
+            return;
+        }
+
+        authors.get(authorpos).setId(copyauthor.getId());
+        authors.get(authorpos).setName(copyauthor.getName());
+
     }
 
     public int remove(int id) {
         int pos = findById(id);
-        if (-1 != pos) {
-            authors.remove(pos);
-            return 1;
+        if (-1 == pos) {
+            return 0;
         }
-        return 0;
+
+        authors.remove(pos);
+        return 1;
     }
 
     public int findById(int authorid) {

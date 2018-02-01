@@ -34,49 +34,43 @@ public class BlLayer {
     }
 
     public String searchAuthorById(int id) {
-
         return gson.toJson(authordao.searchById(id));
     }
 
     public String searchAuthorByName(String name) {
-
         return gson.toJson(authordao.findByName(name));
     }
 
     public int removeAuthor(int id) {
-
         return authordao.remove(id);
     }
 
     public void updateauthor(String json) {
-
         Author author = gson.fromJson(json, Author.class);
         authordao.update(author);
     }
 
     public String preCreateBook(String json) {
-
         Book book = gson.fromJson(json, Book.class);
-        if (-1 != authordao.findById(book.getAuthorid())) {
-            if (-1 != genredao.findById(book.getGenreid())) {
-                return "Created whith ID " + bookdao.create(book);
-            } else {
-                throw new RuntimeException("Genre not found");
-            }
 
-        } else {
+        if (-1 == authordao.findById(book.getAuthorid())) {
             throw new RuntimeException("Author not found");
         }
+
+        if (-1 == genredao.findById(book.getGenreid())) {
+            throw new RuntimeException("Genre not found");
+        }
+
+        return "Created whith ID " + bookdao.create(book);
+
     }
 
     public String preCreateGenre(String json) {
-
         Genre genre = gson.fromJson(json, Genre.class);
         return "Created whith ID " + genredao.create(genre);
     }
 
     public int removeGenre(int id) {
-
         return genredao.remove(id);
     }
 
